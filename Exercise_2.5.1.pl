@@ -14,7 +14,8 @@
 is_solution(M, V, A, W, Oldest, Youngest) :-
 % Comment out the line above and uncomment the last line in this
 % comment block to solve just for the murderer. The query then
-% reduces to "is_solution(M)."
+% reduces to
+%    is_solution(M).
 % is_solution(M) :-
 
 % Variables:
@@ -88,20 +89,11 @@ older(mother, daughter, Oldest, Youngest).
 % Predicates for identity
 %
 
+member(father).
+member(mother).
+member(son).
+member(daughter).
+
 same(X, X).
 
-% Brute force and ignorance power the following predicate.
-% I would welcome a better way.
-
-different(father, mother).
-different(father, son).
-different(father, daughter).
-different(mother, father).
-different(mother, son).
-different(mother, daughter).
-different(son, father).
-different(son, mother).
-different(son, daughter).
-different(daughter, father).
-different(daughter, mother).
-different(daughter, son).
+different(X, Y) :- member(X), member(Y), +\ same(X, Y).
