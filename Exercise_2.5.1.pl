@@ -12,8 +12,8 @@
 %
 
 is_solution(M, V, A, W, Oldest, Youngest) :-
-% Comment out the line above and uncomment the last line in this
-% comment block to solve just for the murderer. The query then
+% To solve just for the murderer, comment out the line above and
+% uncomment the last line in this comment block. The query then
 % reduces to
 %    is_solution(M).
 % is_solution(M) :-
