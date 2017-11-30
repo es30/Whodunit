@@ -78,12 +78,11 @@ could_be_oldest(mother).
 could_be_youngest(son).
 could_be_youngest(daughter).
 
-older(Oldest, Y, Oldest, Youngest) :- !.	% The cuts prevent older from
-older(X, Youngest, Oldest, Youngest) :- !.	% succeeding more than once
-older(father, son, Oldest, Youngest).		% with the same solution.
-older(father, daughter, Oldest, Youngest).
-older(mother, son, Oldest, Youngest).
-older(mother, daughter, Oldest, Youngest).
+older(X, Y, Oldest, Youngest) :- could_be_oldest(X), could_be_youngest(Y).
+older(father , mother, father, Youngest).
+older(mother, father, mother, Youngest).
+older(son, daughter, Oldest, daughter).
+older(daughter, son, Oldest, son).
 
 %
 % Predicates for identity
@@ -96,4 +95,4 @@ member(daughter).
 
 same(X, X).
 
-different(X, Y) :- member(X), member(Y), +\ same(X, Y).
+different(X, Y) :- member(X), member(Y), \+ same(X, Y).
