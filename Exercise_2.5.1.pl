@@ -70,11 +70,12 @@ female(daughter).
 
 %
 % Predicate for age
+% older(X, Y, Oldest, Youngest) succeeds if X is older than Y.
 %
 
-older(X, Y, Oldest, Youngest) :- parent(X), child(Y).
-older(X, Y, X, Youngest) :- parent(X), parent(Y), different(X, Y).
-older(X, Y, Oldest, Y) :- child(X), child(Y), different(X, Y).
+older(X, Y, _, _) :- parent(X), child(Y).
+older(X, Y, X, _) :- parent(X), parent(Y), different(X, Y).
+older(X, Y, _, Y) :- child(X),  child(Y),  different(X, Y).
 
 %
 % Predicates for identity
