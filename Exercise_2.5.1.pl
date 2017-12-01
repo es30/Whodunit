@@ -32,11 +32,11 @@ is_solution(M, V, A, W, Oldest, Youngest) :-
 
     % Clue 2
     opposite_sex(Oldest, W),
-    could_be_oldest(Oldest),
+    parent(Oldest),		% Only a parent can be the oldest.
 
     % Clue 3
     opposite_sex(Youngest, V),
-    could_be_youngest(Youngest),
+    child(Youngest),		% Only a child can be the youngest.
 
     % Clue 4
     older(A, V, Oldest, Youngest),
@@ -48,6 +48,51 @@ is_solution(M, V, A, W, Oldest, Youngest) :-
     different(Youngest, M),
 
     % Implicit constraints
+    different(M, V),
+    different(M, A),
+    different(M, W),
+    different(V, A),
+    different(V, W).
+%   different(A, W)		% Redundant. See Clue 1.
+
+%
+% Predicates for sex
+%
+
+opposite_sex(X, Y) :- male(X), female(Y).
+opposite_sex(X, Y) :- female(X), male(Y).
+
+male(father).
+male(son).
+
+female(mother).
+female(daughter).
+
+%
+% Predicate for age
+%
+
+older(X, Y, Oldest, Youngest) :- parent(X), child(Y).
+older(X, Y, X, Youngest) :- parent(X), parent(Y), different(X, Y).
+older(X, Y, Oldest, Y) :- child(X), child(Y), different(X, Y).
+
+%
+% Predicates for identity
+%
+
+parent(father).
+parent(mother).
+
+child(son).
+child(daughter).
+
+member(X) :- parent(X).
+member(X) :- child(X).
+
+same(X, X).
+
+different(X, Y) :- member(X), member(Y), \+ same(X, Y).
+
     different(M, V),
     different(M, A),
     different(M, W),
