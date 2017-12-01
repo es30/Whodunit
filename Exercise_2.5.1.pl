@@ -80,15 +80,15 @@ older(X, Y, Oldest, Y) :- child(X), child(Y), different(X, Y).
 % Predicates for identity
 %
 
+same(X, X).
+
+different(X, Y) :- member(X), member(Y), \+ same(X, Y).
+
+member(X) :- parent(X).
+member(X) :- child(X).
+
 parent(father).
 parent(mother).
 
 child(son).
 child(daughter).
-
-member(X) :- parent(X).
-member(X) :- child(X).
-
-same(X, X).
-
-different(X, Y) :- member(X), member(Y), \+ same(X, Y).
